@@ -19,7 +19,7 @@ con.connect(function(err){
     }
 });
 
-app.get("/", function(req, res){
+app.get("/maps", function(req, res){
     var sqlStatement = "select * from markers;";
     con.query(sqlStatement, function(err, result, fields){
         if(err) {
