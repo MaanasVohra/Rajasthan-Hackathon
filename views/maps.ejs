@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+       #map {
+        height: 400px;
+        width: 80%;
+        margin: 0 auto;
+       }
+    </style>
+  </head>
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHYzDyOd6xmWhksZjVJ2svVbBoc31V-Vk&callback=initMap">
+    </script>
+    <script>
+        // map initialisation
+        function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var infoWindow = new google.maps.InfoWindow;
+
+        // making markers for each position
+        var objSentFromSrv = <%- JSON.stringify(result)%>;
+        objSentFromSrv.forEach(function(ele){
+            // information which is to be shown
+            var name = document.createElement('strong');
+            name.textContent = ele.name;
+
+            // address content
+            var address = ele.address;
+            var addressText = document.createElement('text');
+            addressText.textContent = address;
+
+            // description content
+            var desc = ele.desc;
+            var descText = document.createElement('text');
+            descText.textContent = desc;
+
+            // total guides
+            var totalGuides = ele.total_guides;
+            totalGuides = totalGuides.toString();
+
+            // deciding color for the map 
+            if(totalGuides == 0) {
+                colorFlag = 1;
+            } else {
+                colorFlag = 0;
+            }
+
+            var colors = ['yellow', 'black'];
+
+            // content for the info window
+            var infowincontent = document.createElement('div');
+            infowincontent.appendChild(name);
+            infowincontent.appendChild(document.createElement('br'));
+            infowincontent.appendChild(addressText);
+            infowincontent.appendChild(document.createElement('br'));
+            infowincontent.appendChild(descText);
+
+            // make marker
+            var marker = new google.maps.Marker({
+                position: {lat: ele.lat, lng: ele.lng},
+                map: map,
+                label: {text: totalGuides, color: colors[colorFlag]} 
+            });
+
+            // add listener
+            marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+              });
+        });
+      }
+    </script>
+    <script>
+        
+    </script>
+  </body>
+</html>
