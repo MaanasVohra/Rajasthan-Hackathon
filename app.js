@@ -61,18 +61,23 @@ app.get("/signuploginguide", function (req, res) {
 app.get("/profileUser/results", function (req, res) {
     var destination = req.query.destination;
     // value is hardcoded
-    var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "&key=AIzaSyA0s9J65wVKBQ9ML0BZvjGfE0eK-HbL3uc";
+    var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "&key=AIzaSyCHYzDyOd6xmWhksZjVJ2svVbBoc31V-Vk";
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var parsedDataLocation = JSON.parse(body);
-            var locationID = parsedDataLocation.results[0].id;
-            console.log(locationID);
+            console.log(parsedDataLocation);
+            console.log("");
+            var locationID = parsedDataLocation.results[0].place_id;
             
-            var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + locationID + "&key=AIzaSyA0s9J65wVKBQ9ML0BZvjGfE0eK-HbL3uc";
+            var url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=" + locationID + "&key=AIzaSyCHYzDyOd6xmWhksZjVJ2svVbBoc31V-Vk";
+            console.log(url);
+            console.log("");
             request(url, function(error1, response1, body1){
                 if(!error && response.statusCode == 200) {
                     var parsedDataInformation = JSON.parse(body1);
+                    res.render("results", {parsedDataInformation: parsedDataInformation});
                     console.log(parsedDataInformation);
+                    console.log("");
                 }
             });
         }

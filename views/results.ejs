@@ -59,6 +59,23 @@
             margin-top: 20px;
         }
 
+        .location-content {
+            margin-top: 20px;
+        }
+
+        #remove-styling:link, #remove-styling:visited {
+            background-color: #f44336;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+
+        #remove-styling:hover, #remove-styling:active {
+            background-color: red;
+        }
     </style>
     </head>
 
@@ -80,7 +97,18 @@
             <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
             <div class="container">
                 <div id="map"></div>
-                <button class="btn btn-primary btn-lg">Go Back</button>
+                <div class="jumbotron location-content">
+                    <h2>Location Name:
+                        <%= parsedDataInformation.result.name %>
+                    </h2>
+                    <h2>Areas around here:
+                        <%= parsedDataInformation.result.vicinity %>
+                    </h2>
+                    <h2>Rating:
+                        <%= parsedDataInformation.result.rating%>
+                    </h2>
+                </div>
+                <a id="remove-styling" href="/profileUser">Go Back</a>
             </div>
         </div>
         <!-- <input id="pac-input" class="controls" type="text" placeholder="Enter a location"> -->
@@ -93,67 +121,71 @@
         </div>
 
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0s9J65wVKBQ9ML0BZvjGfE0eK-HbL3uc&libraries=places&callback=initMap"
-            async defer></script>
-
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHYzDyOd6xmWhksZjVJ2svVbBoc31V-Vk&callback=initMap">
+        </script>
         <script>
-            // This sample uses the Place Autocomplete widget to allow the user to search
-            // for and select a place. The sample then displays an info window containing
-            // the place ID and other information about the place that the user has
-            // selected.
-
-            // This example requires the Places library. Include the libraries=places
-            // parameter when you first load the API. For example:
-            // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
-
+            // map initialisation
             function initMap() {
+                var objSentFromSrv = <%- JSON.stringify(parsedDataInformation) %>;
+
+                var uluru = objSentFromSrv.result.geometry.location;
                 var map = new google.maps.Map(document.getElementById('map'), {
-                    center: { lat: -33.8688, lng: 151.2195 },
-                    zoom: 13
+                    zoom: 4,
+                    center: uluru
                 });
+                var infoWindow = new google.maps.InfoWindow;
 
-                var input = document.getElementById('destination');
+                // making markers for each position
+                console.log(objSentFromSrv);
 
-                var autocomplete = new google.maps.places.Autocomplete(input);
-                autocomplete.bindTo('bounds', map);
+                // information which is to be shown
+                // var name = document.createElement('strong');
+                // name.textContent = ele.name;
 
-                var infowindow = new google.maps.InfoWindow();
-                var infowindowContent = document.getElementById('infowindow-content');
-                infowindow.setContent(infowindowContent);
+                // // address content
+                // var address = ele.address;
+                // var addressText = document.createElement('text');
+                // addressText.textContent = address;
+
+                // // description content
+                // var desc = ele.desc;
+                // var descText = document.createElement('text');
+                // descText.textContent = desc;
+
+                // // total guides
+                // var totalGuides = ele.total_guides;
+                // totalGuides = totalGuides.toString();
+
+                // // deciding color for the map 
+                // if (totalGuides == 0) {
+                //     colorFlag = 1;
+                // } else {
+                //     colorFlag = 0;
+                // }
+
+                // var colors = ['yellow', 'black'];
+
+                // // content for the info window
+                // var infowincontent = document.createElement('div');
+                // infowincontent.appendChild(name);
+                // infowincontent.appendChild(document.createElement('br'));
+                // infowincontent.appendChild(addressText);
+                // infowincontent.appendChild(document.createElement('br'));
+                // infowincontent.appendChild(descText);
+
+                // make marker
                 var marker = new google.maps.Marker({
-                    map: map
+                    position: uluru,
+                    map: map,
+                    // label: { text: totalGuides, color: colors[colorFlag] }
                 });
+
+                // add listener
                 marker.addListener('click', function () {
-                    infowindow.open(map, marker);
+                    infoWindow.setContent(infowincontent);
+                    infoWindow.open(map, marker);
                 });
 
-                autocomplete.addListener('place_changed', function () {
-                    infowindow.close();
-                    var place = autocomplete.getPlace();
-                    if (!place.geometry) {
-                        return;
-                    }
-
-                    if (place.geometry.viewport) {
-                        map.fitBounds(place.geometry.viewport);
-                    } else {
-                        map.setCenter(place.geometry.location);
-                        map.setZoom(17);
-                    }
-
-                    // Set the position of the marker using the place ID and location.
-                    marker.setPlace({
-                        placeId: place.place_id,
-                        location: place.geometry.location
-                    });
-                    marker.setVisible(true);
-
-                    infowindowContent.children['place-name'].textContent = place.name;
-                    infowindowContent.children['place-id'].textContent = place.place_id;
-                    infowindowContent.children['place-address'].textContent = place.formatted_address;
-                    infowindow.open(map, marker);
-                });
             }
         </script>
 
