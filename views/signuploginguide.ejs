@@ -1,0 +1,106 @@
+<% include partials/header %>
+	</head>
+
+	<body>
+
+		<nav class="navbar navbar-inverse" style="padding: 3px 3px 3px 3px">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">Travel Tau</a>
+				</div>
+				<div class="collapse navbar-collapse" id="myNavbar">
+					<form class=" form-inline " action="/profileGuide" method="POST">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<input class="form-control " type="text" placeholder="User Name" aria-label="User Name" name="username" style="margin-top: 5% ">
+							</li>
+							<li>***</li>
+							<li>
+								<input class="form-control " type="Password" placeholder="Password" aria-label="Password" name="password" style="margin-top: 5%">
+							</li>
+							<li>
+								<a href="#" onclick="document.forms[0].submit();return false;">
+									<span class="glyphicon glyphicon-log-in"></span> Login</a>
+							</li>
+
+						</ul>
+
+					</form>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row"></div>
+			<div class="col-lg-6">
+				<img src="">
+			</div>
+			<div class="col-lg-6 container">
+				<h4 class="text-center">Create TouristGuide Account</h4>
+				<form class="container-fluid" action="/signuploginguide" method="POST">
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label>Username</label>
+							<input type="text" class="form-control" name="username" placeholder="Username">
+						</div>
+						<div class="form-group col-md-6">
+							<label>Password</label>
+							<input type="password" class="form-control" name="password" placeholder="Password">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label>Full name</label>
+							<input type="text" class="form-control" name="fullname" placeholder="Fullname">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-12">
+							<label for="inputEamil">Email</label>
+							<input type="Email" class="form-control" name="email" placeholder="Email">
+						</div>
+						<div class="form-group col-md-12">
+							<label for="mobile number">Mobile Number</label>
+							<input type="text" class="form-control" name="mobile_no" placeholder="MobileNumber">
+						</div>
+						<div class="form-group col-md-12">
+							<label>Bhamasha card no.</label>
+							<input type="text" class="form-control" name="bhamasha_no" id="inputAddress2" placeholder="Bhamasha card No.">
+						</div>
+						<div class="form-group col-md-12">
+							<label>Aadhar card no.</label>
+							<input type="text" class="form-control" name="aadhar_no" id="inputAddress2" placeholder="Bhamasha card No.">
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-4">
+							<label for="inputCity">City</label>
+							<input type="text" class="form-control" id="inputCity" name="city" placeholder="ex: jaipur">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="inputState">State</label>
+							<input type="text" class="form-control" id="inputState" name="state" placeholder="ex: Rajasthan">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="inputZip">Zip</label>
+							<input type="text" class="form-control" id="inputZip" name="zip" placeholder="zip">
+						</div>
+					</div>
+					<div class="form-row">
+
+						<div class="form-group col-md-12">
+							<button type="submit" class="btn btn-primary">Sign in</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		</div>
+		</div>
+
+		<% include partials/footer %>

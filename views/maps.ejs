@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
+<% include partials/header %>
     <style>
        #map {
         height: 400px;
@@ -12,8 +10,9 @@
   <body>
     <h3>My Google Maps Demo</h3>
     <div id="map"></div>
+
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHYzDyOd6xmWhksZjVJ2svVbBoc31V-Vk&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHYzDyOd6xmWhksZjVJ2svVbBoc31V-Vk&callback=initMap">
     </script>
     <script>
         // map initialisation
@@ -81,5 +80,4 @@
     <script>
         
     </script>
-  </body>
-</html>
+<% include partials/footer %>

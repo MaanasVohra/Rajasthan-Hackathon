@@ -1,0 +1,54 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-image: url("/images/sunset.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar {
+    margin-top: 20px;
+    background-image: url("/images/sunset.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none !important;
+    font-size: 1.3em;
+}
+
+.navbar-right {
+    margin-right: 20px;
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: black;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #000000;
+}
+
+.navbar-default .navbar-toggle {
+    border-color: black;
+}
+
+
+#heading-content {
+    margin-top: 100px;
+    text-align: center;
+}
+
+hr {
+    width: 45%;
+}
