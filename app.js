@@ -2,6 +2,7 @@ var express = require("express");
 var app = express();
 var mysql = require("mysql");
 var bodyParser = require("body-parser");
+var request = require("request");
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + "/public"));
@@ -54,6 +55,28 @@ app.get("/signuploginuser", function (req, res) {
 // sign up / login -> guide page 
 app.get("/signuploginguide", function (req, res) {
     res.render("signuploginguide");
+});
+
+// profile page -> results
+app.get("/profileUser/results", function (req, res) {
+    var destination = req.query.destination;
+    // value is hardcoded
+    var url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + destination + "&key=AIzaSyA0s9J65wVKBQ9ML0BZvjGfE0eK-HbL3uc";
+    request(url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var parsedDataLocation = JSON.parse(body);
+            var locationID = parsedDataLocation.results[0].id;
+            console.log(locationID);
+            
+            var url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=" + locationID + "&key=AIzaSyA0s9J65wVKBQ9ML0BZvjGfE0eK-HbL3uc";
+            request(url, function(error1, response1, body1){
+                if(!error && response.statusCode == 200) {
+                    var parsedDataInformation = JSON.parse(body1);
+                    console.log(parsedDataInformation);
+                }
+            });
+        }
+    });
 });
 
 // profile page -> user
@@ -168,14 +191,14 @@ app.post("/profileGuide", function (req, res) {
 
     var sqlStatement = "select username, password from guide where username = ?";
     con.query(sqlStatement, [username], function (err, result, values) {
-        if(err) {
+        if (err) {
             console.log("Error querying");
         } else {
-            if(result.length == 0){
+            if (result.length == 0) {
                 console.log("no such result exists");
                 res.redirect("/signuploginguide");
             } else {
-                if(result[0].password == password) {
+                if (result[0].password == password) {
                     console.log("Successful login!");
                     res.redirect("/profileGuide");
                 } else {
